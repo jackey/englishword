@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+
+  <title>English Word That I should Have</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.2/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.js"></script>
+
+	<script type="text/template" id="one-word-template">
+        <div class="col-md-12">
+        	<p class="well">
+        	</p>
+        </div>
+	</script>
+
+	<script type="text/javascript">
+		(function ($) {
+			$(function () {
+			    $("#menu-toggle").click(function(e) {
+			        e.preventDefault();
+			        $("#wrapper").toggleClass("active");
+			    });
+
+			    // Get all words
+			    $.ajax({
+			    	url: "/all",
+			    	method: 'get',
+			    	dataType: 'json', 
+			    	success: function (data) {
+			    		if (data["error"]) {
+			    			$("h6", template).html(data["error"]);
+			    		}
+			    		else {
+			    			var words = data["data"];
+			    			for (var i = 0; i < words.length; i++) {
+			    				for (var word in words[i]) {
+						    		var template = $($("#one-word-template").html());
+						    		template = template.clone();
+			    					var translate = words[i][word];
+			    					var str = "<div>"+word+"</div>";
+			    					str += "<div >" + translate["sentences"][0]["trans"] + "</div>";
+			    					$("p",template).append(str);
+			    					$(".page-content .row").append(template);
+			    				}
+			    			}
+			    		}
+			    	}
+			    });
+			});
+		})(jQuery);
+	</script>
+</head>
+
+<body>
+    <div id="wrapper">
+      
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <li class="sidebar-brand"><a href="#">Start it</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="http://github.com/jackey">About Me</a></li>
+        </ul>
+      </div>
+          
+      <!-- Page content -->
+      <div id="page-content-wrapper">
+        <div class="content-header">
+          <h1>
+            <a id="menu-toggle" href="#" class="btn btn-default"><i class="icon-reorder">Show Me</i></a>
+          </h1>
+        </div>
+
+        <!-- Keep all page content within the page-content inset div! -->
+        <div class="page-content inset">
+          <div class="row">
+
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+</body>
+</html>

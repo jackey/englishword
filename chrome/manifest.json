@@ -1,0 +1,16 @@
+{
+	"manifest_version": 2,
+	"name": "One Click Image",
+	"description": "This extension is for example",
+	"version": "1.0",
+	"permissions": [
+		"contextMenus",
+		"http://192.168.1.32:3001/"
+	],
+	"background": {
+		"scripts": ["menu.js"]
+	},
+	"icons": {
+		"16": "icon.png"
+	}
+}
